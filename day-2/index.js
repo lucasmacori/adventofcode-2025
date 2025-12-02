@@ -14,13 +14,19 @@ const generateIdList = (firstId, lastId) => {
 const idIsInvalid = (id) => {
   const len = id.length;
 
-  if (len % 2 !== 0) return false;
+  for (let patternLen = 1; patternLen <= len / 2; patternLen++) {
+    if (len % patternLen === 0) {
+      const pattern = id.substring(0, patternLen);
+      const repetitions = len / patternLen;
 
-  const halfLen = len / 2;
-  const firstHalf = id.substring(0, halfLen);
-  const secondHalf = id.substring(halfLen);
+      const repeated = pattern.repeat(repetitions);
+      if (repeated === id && repetitions >= 2) {
+        return true;
+      }
+    }
+  }
 
-  return firstHalf === secondHalf;
+  return false;
 }
 
 const handleRange = (range) => {
