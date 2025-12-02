@@ -4528,27 +4528,34 @@ let zeroCount = 0;
 
 const handleLine = (line) => {
   const side = line.substring(0, 1);
-  let value = Number(line.substring(1));
+  const value = Number(line.substring(1));
+
+  const startDial = dial;
+  let zerosThisRotation = 0;
 
   if (side === "L") {
-    value = -value;
+    for (let i = 0; i < value; i++) {
+      dial = dial - 1;
+      if (dial < 0) dial = 99;
+      if (dial === 0) {
+        zerosThisRotation++;
+      }
+    }
+  } else {
+    for (let i = 0; i < value; i++) {
+      dial = dial + 1;
+      if (dial > 99) dial = 0;
+      if (dial === 0) {
+        zerosThisRotation++;
+      }
+    }
   }
-  const currentDial = dial + value;
-  let newDial = dial + (value % 100);
 
-  newZero = Math.abs(Math.floor(currentDial / 100));
-  zeroCount += newZero;
-
-  if (newDial < 0) {
-    newDial += 100;
-  } else if (newDial > 99) {
-    newDial -= 100;
-  }
-  dial = newDial;
+  zeroCount += zerosThisRotation;
 };
 
-for (let line of edgeCaseExampleInput.split("\n")) {
+for (let line of input.split("\n")) {
   handleLine(line);
 }
 
-console.log("Number of zero", zeroCount);
+console.log("Number of zero:", zeroCount);
