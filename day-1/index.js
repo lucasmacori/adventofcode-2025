@@ -4508,6 +4508,21 @@ L99
 R14
 L82`;
 
+const edgeCaseExampleInput = `L68
+L30
+R48
+L5
+R60
+L55
+L1
+L99
+R14
+L82
+R50
+R150
+L250
+R1000`;
+
 let dial = 50;
 let zeroCount = 0;
 
@@ -4532,7 +4547,7 @@ const handleLine = (line) => {
   dial = newDial;
 };
 
-for (let line of input.split("\n")) {
+for (let line of edgeCaseExampleInput.split("\n")) {
   handleLine(line);
 }
 
